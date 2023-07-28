@@ -844,6 +844,18 @@ final class Util
     }
 
     /**
+     * Validação para o tipo de cnab 150
+     *
+     * @param  $content
+     * @return bool
+     */
+    public static function isCnab150($content)
+    {
+        $content = is_array($content) ? $content[0] : $content;
+        return mb_strlen(rtrim($content, "\r\n")) == 150 ? true : false;
+    }
+
+    /**
      * Validação para o tipo de cnab 240
      *
      * @param  $content
@@ -894,7 +906,7 @@ final class Util
     }
 
     /**
-     * Valida se o header é de um arquivo retorno valido, 240 ou 400 posicoes
+     * Valida se o header é de um arquivo retorno valido, 150, 240 ou 400 posicoes
      *
      * @param $header
      *
@@ -902,13 +914,16 @@ final class Util
      */
     public static function isHeaderRetorno($header)
     {
-        if (!self::isCnab240($header) && !self::isCnab400($header)) {
+        if (!self::isCnab150($header) && !self::isCnab240($header) && !self::isCnab400($header)) {
             return false;
         }
         if (self::isCnab400($header) && mb_substr($header, 0, 9) != '02RETORNO') {
             return false;
         }
         if (self::isCnab240($header) && mb_substr($header, 142, 1) != '2') {
+            return false;
+        }
+        if (self::isCnab150($header) && mb_substr($header, 0, 2) != 'A2') {
             return false;
         }
         return true;

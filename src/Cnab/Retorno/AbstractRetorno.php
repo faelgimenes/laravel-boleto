@@ -8,6 +8,9 @@
 
 namespace Eduardokum\LaravelBoleto\Cnab\Retorno;
 
+use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab150\Detalhe as Detalhe150Contract;
+use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab150\Header as Header150Contract;
+use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab150\Trailer as Trailer150Contract;
 use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab240\Detalhe as Detalhe240Contract;
 use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab240\Header as Header240Contract;
 use Eduardokum\LaravelBoleto\Contracts\Cnab\Retorno\Cnab240\Trailer as Trailer240Contract;
@@ -100,7 +103,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
             throw new \Exception(sprintf("Arquivo de retorno inválido"));
         }
 
-        $banco = Util::isCnab400($this->file[0]) ? mb_substr($this->file[0], 76, 3) : mb_substr($this->file[0], 0, 3);
+        $banco = Util::isCnab400($this->file[0]) ? mb_substr($this->file[0], 76, 3) : (Util::isCnab240($this->file[0]) ?  mb_substr($this->file[0], 0, 3) : mb_substr($this->file[0], 42, 3));
         if (!in_array($banco, $bancosDisponiveis)) {
             throw new \Exception(sprintf("Banco: %s, inválido", $banco));
         }
@@ -151,7 +154,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
     /**
      * @param $i
      *
-     * @return Detalhe240Contract|Detalhe400Contract|null
+     * @return Detalhe150Contract|Detalhe240Contract|Detalhe400Contract|null
      */
     public function getDetalhe($i)
     {
@@ -159,7 +162,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
     }
 
     /**
-     * @return Header240Contract|Header400Contract
+     * @return Header150Contract|Header240Contract|Header400Contract
      */
     public function getHeader()
     {
@@ -167,7 +170,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
     }
 
     /**
-     * @return Trailer240Contract|Trailer400Contract
+     * @return Trailer150Contract|Trailer240Contract|Trailer400Contract
      */
     public function getTrailer()
     {
@@ -185,7 +188,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
     /**
      * Retorna o detalhe atual.
      *
-     * @return Detalhe240Contract|Detalhe400Contract
+     * @return Detalhe150Contract|Detalhe240Contract|Detalhe400Contract
      */
     protected function detalheAtual()
     {
