@@ -44,7 +44,7 @@ class Factory
             $banco = mb_substr($file_content[0], 0, 3);
             $namespace = __NAMESPACE__ . '\\Cnab240\\';
         } elseif (Util::isCnab150($file_content)) {
-            $banco = mb_substr($file_content[0], 43, 3);
+            $banco = mb_substr($file_content[0], 42, 3);
             $namespace = __NAMESPACE__ . '\\Cnab150\\';
         }
 
