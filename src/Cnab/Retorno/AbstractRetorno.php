@@ -132,7 +132,7 @@ abstract class AbstractRetorno implements \Countable, \SeekableIterator
      */
     public function getTipo()
     {
-        return Util::isCnab400($this->file[0]) ? 400 : 240;
+        return Util::isCnab400($this->file[0]) ? 400 : (Util::isCnab240($this->file[0]) ? 240 : 150);
     }
 
     /**
