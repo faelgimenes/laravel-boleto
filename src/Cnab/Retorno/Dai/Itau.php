@@ -186,7 +186,8 @@ class Itau extends AbstractRetorno implements RetornoCnab240
 
             if (!empty($ocorrencias_liquidado)) {
                 $this->totais['liquidados']++;
-                $d->setOcorrenciaTipo($d::OCORRENCIA_LIQUIDADA);
+                $d->setOcorrenciaTipo($d::OCORRENCIA_LIQUIDADA)
+                ->setDataCredito($this->rem(155, 162, $detalhe));
 
             } else if (!empty($ocorrencias_entrada)) {
                 $this->totais['entradas']++;
