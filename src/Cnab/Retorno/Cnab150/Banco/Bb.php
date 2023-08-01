@@ -105,7 +105,7 @@ class Bb extends AbstractRetorno implements RetornoCnab150
           ->setValor(Util::nFloat($this->rem(53, 67, $detalhe)/100, 2, false))
           ->setOcorrencia($this->rem(68, 69, $detalhe))
           ->setOcorrenciaDescricao(Arr::get($this->ocorrencias, $d->getOcorrencia(), 'Desconhecida'))
-          ->setNumeroDocumento($this->rem(70, 89, $detalhe));
+          ->setNumeroDocumento($this->rem(70, 88, $detalhe));
 
         if ($d->hasOcorrencia('00', '31')) {
             $this->totais['liquidados']++;
