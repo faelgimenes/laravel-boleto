@@ -109,7 +109,9 @@ class Bb extends AbstractRetorno implements RetornoCnab150
 
         if ($d->hasOcorrencia('00', '31')) {
             $this->totais['liquidados']++;
-            $d->setOcorrenciaTipo($d::OCORRENCIA_LIQUIDADA);
+            $d->setOcorrenciaTipo($d::OCORRENCIA_LIQUIDADA)
+            ->setValorRecebido(Util::nFloat($this->rem(53, 67, $detalhe)/100, 2, false));
+
         } elseif ($d->hasOcorrencia('01', '02', '05', '10', '12','13','14','15', '18', '30')) {
             $this->totais['erros']++;
             $d->setOcorrenciaTipo($d::OCORRENCIA_ERRO);
