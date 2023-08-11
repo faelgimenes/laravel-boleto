@@ -1,6 +1,6 @@
 <?php
 
-namespace Eduardokum\LaravelBoleto\Cnab\Retorno\Dai;
+namespace Eduardokum\LaravelBoleto\Cnab\Retorno\Dai\Banco;
 
 use Illuminate\Support\Arr;
 use Eduardokum\LaravelBoleto\Util;
